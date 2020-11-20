@@ -1,0 +1,112 @@
+﻿@model IEnumerable<Biblioteca.Livros.Web.ViewModels.Colecao.ColecaoIndexViewModel>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+
+<div class="row">
+    <div class="col-md-10">
+        <input type="text" id="pesquisaColecao" class="form-control" />
+    </div>
+    <div class="col-md-2">
+        <button id="btnPesquisarColecao">Pesquisar Coleção</button>
+    </div>
+
+</div>
+
+
+<table class="table" id="tblColecoes">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Nome)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Quantidade)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.AnoLancamento)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Descricao)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Editora)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Nome)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Quantidade)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.AnoLancamento)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Descricao)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Editora)
+                </td>
+                <td>
+                    @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
+                    @Html.ActionLink("Details", "Details", new { id = item.Id }) |
+                    @Html.ActionLink("Delete", "Delete", new { id = item.Id })
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+@section Scripts{
+     <script>
+         $(document).ready(function () {
+             $("#btnPesquisarColecao").click(function () {
+                 var termoPesquisa = $("#pesquisaColecao").val();
+                 $.ajax({
+                     method: "GET",
+                     url: "/Colecoes/FiltrarPorNome?pesquisa=" + termoPesquisa,
+                     success: function (data) {
+                         $("#tblColecoes tbody > tr").remove();
+                         $.each(data, function (i, colecao) {
+                             $("#tblColecoes tbody").append(
+                                 "<tr>" +
+                                 "<td>" + colecao.Nome + "</td>" +
+                                 "<td>" + colecao.Quantidade + "</td>" +
+                                 "<td>" + colecao.AnoLancamento + "</td>" +
+                                 "<td>" + colecao.Descricao + "</td>" +
+                                 "<td>" + colecao.Editora + "</td>" +
+                                 "<td>" +
+                                 "<a href='/Colecoes/Edit/" + colecao.Id + "'>Editar</a>" +
+                                 "<a href='/Colecoes/Details/" + colecao.Id + "'>Detalhar</a>" +
+                                 "<a href='/Colecoes/Delete/" + colecao.Id + "'>Excluir</a>" +
+                                 "</td>" +
+                                 "</tr>"
+                             );
+                         });
+                     },
+                     error: function (data) {
+                         alert("Houve um erro na pesquisa");
+                     }
+                 });
+             });
+         });
+
+
+     </script>
+    
+}
