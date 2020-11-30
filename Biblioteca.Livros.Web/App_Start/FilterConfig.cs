@@ -1,4 +1,5 @@
-﻿using System.Web;
+﻿using Biblioteca.Livros.Web.Filtros;
+using System.Web;
 using System.Web.Mvc;
 
 namespace Biblioteca.Livros.Web
@@ -8,6 +9,7 @@ namespace Biblioteca.Livros.Web
         public static void RegisterGlobalFilters(GlobalFilterCollection filters)
         {
             filters.Add(new HandleErrorAttribute());
+            filters.Add(new LogActionFilter());
         }
     }
 }

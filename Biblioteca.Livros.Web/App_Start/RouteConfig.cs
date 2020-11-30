@@ -15,7 +15,7 @@ namespace Biblioteca.Livros.Web
 
             routes.MapRoute(
                  name:"FiltrarPorNome",
-                 url: "Colecoes/FiltrarPorNome/{pesquisa }",
+                 url: "Colecoes/FiltrarPorNome/{pesquisa}",
                  defaults: new {controller = "Colecoes", action="FiltrarPorNome", pesquisa = UrlParameter.Optional }
             );
 

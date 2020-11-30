@@ -16,6 +16,7 @@ using Biblioteca.Livros.Web.ViewModels.Livro;
 
 namespace Biblioteca.Livros.Web.Controllers
 {
+    [Authorize]
     public class LivrosController : Controller
     {
         private IRepositorioGenerico<Livro, long>

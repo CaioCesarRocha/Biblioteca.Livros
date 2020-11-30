@@ -11,16 +11,21 @@ using Biblioteca.Livros.Dados.Entity.Context;
 using Biblioteca.Livros.Dominio;
 using Biblioteca.Livros.Repositorios.Comum;
 using Biblioteca.Livros.Repositorios.Entity;
+using Biblioteca.Livros.Web.Filtros;
 using Biblioteca.Livros.Web.ViewModels.Colecao;
 
 namespace Biblioteca.Livros.Web.Controllers
 {
+    [Authorize]
+    [LogActionFilter]
+    
     public class ColecoesController : Controller
     {
         private IRepositorioGenerico<Colecao, int>
            repositorioColecoes = new ColecoesRepositorio(new LivroDbContext());
 
         // GET: Colecoes
+        
         public ActionResult Index()
         {
             return View(Mapper.Map<List<Colecao>, List<ColecaoIndexViewModel>>(repositorioColecoes.Selecionar()));
